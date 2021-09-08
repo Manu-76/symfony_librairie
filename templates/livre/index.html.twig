@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos livres{% endblock %}
+
+{% block body %}
+<h1>Nos livres :</h1>
+<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio dolorum debitis iusto hic reprehenderit. Nisi quasi non earum deleniti ducimus assumenda. Fugit possimus amet nesciunt, reiciendis enim voluptatibus architecto quam.</p>
+<hr>
+<div class="form-group my-3">
+        <form action="{{ path('search-livre') }}" method="get" class="d-flex">
+                <input type="text" name="search-value" id="" class="form-control">
+                <button type="submit" class="btn btn-dark">Rechercher</button>
+        </form>
+</div>
+<div class="row">
+{% if livres|length > 0 %}
+        {# On fait une boucle sur la variable nommée livre passée à la vue dans le tableau associatif de la méthode index du LivreController #}
+        {% for livre in livres %}
+        <div class="col-12 col-sm-6 col-md-3 col-lg-2 mb-3 mb-lg-0">
+                <a href="{{ path('livre-detail', { slug: livre.id }) }}">
+                        <img src="{{ asset('images/livres/' ~ livre.imageName )}}" alt="{( livre.titre )}" class="img-fluid">
+                </a>
+        </div>
+        {% endfor %}
+{% else %}
+        <div class="col-12">
+        Aucun résultat pour votre recherche.
+        </div>
+{% endif %}
+</div>
+<div class="navigation">
+        {{ knp_pagination_render(livres) }}
+</div>
+{% endblock %}

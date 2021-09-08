@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue!{% endblock %}
+
+{% block body %}
+<h1>
+    {% if homeContent.titre is defined and homeContent.titre is not null %}
+{{ homeContent.titre }}
+    {% endif %}
+</h1>
+<p>
+    {% if homeContent.texte is defined and homeContent.texte is not null %}
+{{ homeContent.texte }}
+    {% endif %}
+</p>
+    <hr>
+        <h2>Nos derniers livres</h2>
+            <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+        {% for livre in livres %}
+<div class="col-6 col-md-3 mb-5 p-3">
+<img src="{{ asset("images/livres/" ~ livre.imageName) }}" alt="" class="img-fluid">
+</div>
+
+    {% endfor %}
+{% endblock %}

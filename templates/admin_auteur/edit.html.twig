@@ -1,0 +1,15 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Modifier un auteur{% endblock %}
+
+{% block body %}
+    <h1>Modifier Auteur</h1>
+
+    {{ include('admin_auteur/_form.html.twig', {'button_label': 'Confirmer'}) }}
+
+    
+    <div class="d-flex justify-content-evenly align-items-center">
+    <a href="{{ path('admin_auteur_index') }}" button type="button" class="btn btn-dark">Retour Liste</a>
+
+    {{ include('admin_auteur/_delete_form.html.twig') }}
+{% endblock %}

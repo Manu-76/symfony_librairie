@@ -1,0 +1,44 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+<div class="d-flex justify-content-between align-items-center">
+    <h1>Liste des {{ title }}</h1>
+    <a href="{{ path('admin_user_new') }}" class="btn btn-success">Nouveau</a>
+</div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Rôle</th>
+                <th class="text-end">actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                {% if "ROLE_ADMIN" in user.roles %}
+                Administrateur
+                {% elseif "ROLE_USER" %}
+                Utilisateur
+                {% endif %}
+            </td>
+                <td class="d-flex justify-content-end">
+                    <a href="{{ path('admin_user_show', {'id': user.id}) }}" class="btn btn-warning"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                    <a href="{{ path('admin_user_edit', {'id': user.id}) }}" class="btn btn-warning ms-3"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

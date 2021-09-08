@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les auteurs{% endblock %}
+
+
+{% block body %}
+<h1>Les auteurs :</h1>
+<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio dolorum debitis iusto hic reprehenderit. Nisi quasi non earum deleniti ducimus assumenda. Fugit possimus amet nesciunt, reiciendis enim voluptatibus architecto quam.</p>
+        <hr>
+
+
+<div class="row">
+{# On fait une boucle sur la variable nommée auteur passée à la vue dans le tableau associatif de la méthode index du AuteurController #}
+{% for auteur in auteurs %}
+
+                <div class="col col-sm-6 col-md-3 col-lg-2 mb-3 mb-lg-2 border">
+                {% if auteur.imageName is defined and auteur.imageName is not null %}
+                <img src="{{ asset("images/auteurs/" ~ auteur.imageName) }}" alt="" class="img-list-admin">
+                {% else %}
+                <img src="{{ asset("images/auteurs/inconnu.png" ~ auteur.imageName) }}" alt="" class="img-list-admin">
+                {% endif %}
+                </div>
+        
+
+        
+                <div class="col col-sm-6 col-md-3 col-lg-2 mb-3 mb-lg-2 border">
+                {% if auteur.pseudo is defined and auteur.pseudo is not null %}
+                <h2>{{ auteur.pseudo }}</h2>
+                {% else %}
+                <h2>{{ auteur.prenom }} {{ auteur.nom }}</h2>
+                <a href="{{ path('auteur-detail', { 'id' : auteur.id }) }}" class="btn btn-dark mt-3">Voir la fiche</a>
+                {% endif %}
+                </div>
+{% endfor %}
+</div>
+
+
+ 
+<div class="navigation">
+        {{ knp_pagination_render(auteurs) }}
+</div>
+{% endblock %}

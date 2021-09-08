@@ -1,0 +1,39 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Auteur{% endblock %}
+
+{% block body %}
+    <h1>Auteur</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ auteur.id }}</td>
+            </tr>
+            <tr>
+                <th>Pseudo</th>
+                <td>{{ auteur.pseudo }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ auteur.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prénom</th>
+                <td>{{ auteur.prenom }}</td>
+            </tr>
+            <tr>
+            <th>ImageName</th>
+            <td>{{ auteur.imageName }}</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_auteur_index') }}" class="btn btn-success">Retour Liste</a>
+
+    <a href="{{ path('admin_auteur_edit', {'id': auteur.id}) }}" class="btn btn-warning ms-3"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+
+    {{ include('admin_auteur/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos livres{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-12 col-md-3">
+        <img src="{{ asset('images/livres/' ~ livre.imageName ) }}" alt="{{ livre.titre }}" class="img-fluid">
+    </div>
+    <div class="col-12 col-md-9">
+    <h1>{{ livre.titre }}</h1>
+    <div>{{ livre.description|raw }}</div>
+        <p>
+        {% if livre.auteur.pseudo is defined and livre.auteur.pseudo is not null %}
+        {{ livre.auteur.pseudo }}
+        {% else %}
+        {{ livre.auteur.nom }} {{ livre.auteur.prenom }} 
+        {# {{ livre.auteur.nom ~ ' ' ~ livre.auteur.prenom }} #}
+        {% endif %}
+        </p>
+    </div>
+</div>
+{% endblock %}

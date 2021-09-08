@@ -1,0 +1,51 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Auteur index{% endblock %}
+
+{% block body %}
+    <div class="d-flex justify-content-between align-items-center">
+    <h1>Liste des auteurs</h1>
+    <a href="{{ path('admin_auteur_new') }}" class="btn btn-danger mt-3">Nouveau</a>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Photo</th>    
+                <th>Pseudo</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Biographie</th> 
+                <th>Mise à jour</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for auteur in auteurs %}
+            <tr>
+                <td>{{ auteur.id }}</td>
+                <td>
+                    {% if auteur.imageName is defined and auteur.imageName is not null %}
+                    <img src="{{ asset('images/auteurs/' ~ auteur.imageName )}}" alt="{{ auteur.nom }}" class="img-list-admin">
+                    {% else %}
+                    <img src="{{ asset('images/auteurs/inconnu.png') }}" alt="" class="img-list-admin">
+                    {% endif %}
+                </td>
+                <td>{{ auteur.pseudo }}</td>
+                <td>{{ auteur.nom }}</td>
+                <td>{{ auteur.prenom }}</td>
+                <td>{{ auteur.biographie }}</td>
+                <td>{{ auteur.updatedAt ? auteur.updatedAt|date('d-m-Y H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('admin_auteur_show', {'id': auteur.id}) }}" class="btn btn-warning"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                    <a href="{{ path('admin_auteur_edit', {'id': auteur.id}) }}" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

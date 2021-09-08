@@ -1,0 +1,46 @@
+@import '_variables.scss';
+
+
+body{
+    .img-list-admin{
+        max-width: 80px;
+    }
+
+    background-color: $bgColor;
+    padding: 0 100px;   
+
+    .container-fluid{
+    background-color: $ctaColor !important;
+    min-width: 1320px;
+    }
+
+    .navbar{
+        padding-bottom: 0;
+    }
+
+    .img-fluid{
+        max-width: 100px;
+    }
+
+    .navigation {
+        .page-item.active {
+            .page-link {
+                background-color: $ctbColor;
+            }
+        }
+    }
+
+    .bg-dark{
+        background-color: $ctbColor !important;
+    }
+    
+    .btn-warning{
+        
+        background-color: $ctbColor;
+        border-color: black;
+    }
+
+    .btn-success{
+        background-color: $ctbColor;
+    }
+}
