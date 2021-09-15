@@ -16,9 +16,12 @@
 {% if livres|length > 0 %}
         {# On fait une boucle sur la variable nommée livre passée à la vue dans le tableau associatif de la méthode index du LivreController #}
         {% for livre in livres %}
-        <div class="col-12 col-sm-6 col-md-3 col-lg-2 mb-3 mb-lg-0">
-                <a href="{{ path('livre-detail', { slug: livre.id }) }}">
+        <div class="col-12 col-md-3 col-lg-2 mb-3">
+                <a href="{{ path('livre-detail', { 'slug': livre.id }) }}" class="img-livre">
                         <img src="{{ asset('images/livres/' ~ livre.imageName )}}" alt="{( livre.titre )}" class="img-fluid">
+                        {% if app.user and livre not in app.user.booklist %} 
+                        <button data-livreid="{{ livre.id }}" class="btn btn-sm btn-warning absolute text-white bt-favori"><i class="fa fa-star" aria-hidden="true"></i></button>
+                        {% endif %} 
                 </a>
         </div>
         {% endfor %}
@@ -31,4 +34,7 @@
 <div class="navigation">
         {{ knp_pagination_render(livres) }}
 </div>
+{% endblock %}
+{% block javascripts %}
+<script src="{{ asset("js/livre-favoris.js") }}"></script>
 {% endblock %}

@@ -3,7 +3,7 @@
 {% block title %}New Livre{% endblock %}
 
 {% block body %}
-    <a href="{{ path('admin_livre_index') }}" class="btn btn-dark my-2">back to list</a>
+    <a href="{{ path('admin_livre_index') }}"  class="btn btn-success"><i class="fa fa-hand-o-left" aria-hidden="true"></i></a>
     <h1>Create new Livre</h1>
 
     {{ include('admin_livre/_form.html.twig') }}

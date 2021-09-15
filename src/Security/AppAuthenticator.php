@@ -49,7 +49,10 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
-
+        // On vérifie qu'on a faire à un compte vérifié (isVerified à 1 dans la bdd)
+        if(!$token->getUser()->isVerified()){
+            return new RedirectResponse($this->urlGenerator->generate('app_logout'));
+        }
         // For example:
         //  On recupère le rôle de l'utilisateur afin de rediriger sur le dashboard d'administration la route admin/livre si il est admin ou sur la route homepage s'il est user
         $roles = $token->getUser()->getRoles();

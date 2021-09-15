@@ -3,12 +3,17 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -21,6 +26,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email(
+     *     message = "Votre adresse email n'est pas conforme."
+     * )
      */
     private $email;
 
@@ -35,10 +43,78 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public $role;
 
     /**
+     * @Assert\Length(
+     *      min = 6,
+     *      max = 50,
+     *      minMessage = "Votre mot de passe doit contenir au minimum 6 caractères",
+     *      maxMessage = "Votre mot de passe ne doit pas contenir plus de 50 caractères"
+     * )
+     * @Assert\IdenticalTo(
+     * propertyPath="confirmPassword",
+     * message="Le mot de passe saisi ne correspond pas à sa confirmation"
+     * )
+     */
+    private $plainPassword;
+
+    /**
+     * @Assert\Length(
+     *      min = 6,
+     *      max = 50,
+     *      minMessage = "Votre mot de passe doit contenir au minimum 6 caractères",
+     *      maxMessage = "Votre mot de passe ne doit pas contenir plus de 50 caractères"
+     * )
+     * @Assert\IdenticalTo(propertyPath="plainPassword",
+     * message="La confirmation saisie ne correspond pas au mot de passe"
+     * )
+     */
+    private $confirmPassword;
+
+    /**
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $firstname;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $pseudo;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $country;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVerified = false;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Livre::class, inversedBy="users")
+     */
+    private $bookList;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Avatar::class, mappedBy="user", cascade={"persist", "remove"})
+     * @Assert\Valid
+     */
+    private $avatar;
+
+    public function __construct()
+    {
+        $this->bookList = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -145,6 +221,152 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setRole($role)
     {
         $this->role = $role;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(?string $firstname): self
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(?string $pseudo): self
+    {
+        $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    public function getCountry(): ?string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(?string $country): self
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of plainPassword
+     */ 
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * Set the value of plainPassword
+     *
+     * @return  self
+     */ 
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of confirmPassword
+     */ 
+    public function getConfirmPassword()
+    {
+        return $this->confirmPassword;
+    }
+
+    /**
+     * Set the value of confirmPassword
+     *
+     * @return  self
+     */ 
+    public function setConfirmPassword($confirmPassword)
+    {
+        $this->confirmPassword = $confirmPassword;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Livre[]
+     */
+    public function getBookList(): Collection
+    {
+        return $this->bookList;
+    }
+
+    public function addBookList(Livre $book): self
+    {
+        if (!$this->bookList->contains($book)) {
+            $this->bookList[] = $book;
+        }
+
+        return $this;
+    }
+
+    public function removeBookList(Livre $book): self
+    {
+        $this->bookList->removeElement($book);
+
+        return $this;
+    }
+
+    public function getAvatar(): ?Avatar
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?Avatar $avatar): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($avatar === null && $this->avatar !== null) {
+            $this->avatar->setUser(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($avatar !== null && $avatar->getUser() !== $this) {
+            $avatar->setUser($this);
+        }
+
+        $this->avatar = $avatar;
 
         return $this;
     }

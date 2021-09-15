@@ -1,27 +1,49 @@
 @import '_variables.scss';
 
+html{
+    background-color: $bgColor;
+}
 
 body{
+    
     .img-list-admin{
         max-width: 80px;
     }
 
-    background-color: $bgColor;
+    .absolute{
+        position: absolute;
+    }
+
+    .img-livre{
+        position: relative;
+        display: block;
+        .absolute{
+            right: 0;
+            bottom: 0;
+        }
+    }
+
+    height:2000px;
+    background-color: $ctaColor;
     padding: 0 100px;   
 
     .container-fluid{
-    background-color: $ctaColor !important;
-    min-width: 1320px;
+        min-width: 1020px;
+    }
+
+    .container-fluid{
+        .row{
+        max-width: 1020px;
+        max-height:300px;
+    }
     }
 
     .navbar{
         padding-bottom: 0;
+        background-color: $ctbColor !important;
     }
 
-    .img-fluid{
-        max-width: 100px;
-    }
-
+   
     .navigation {
         .page-item.active {
             .page-link {
@@ -30,10 +52,6 @@ body{
         }
     }
 
-    .bg-dark{
-        background-color: $ctbColor !important;
-    }
-    
     .btn-warning{
         
         background-color: $ctbColor;

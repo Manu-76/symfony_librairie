@@ -115,6 +115,9 @@
             "./config/packages/fos_ckeditor.yaml"
         ]
     },
+    "imagine/imagine": {
+        "version": "1.2.4"
+    },
     "jms/metadata": {
         "version": "2.5.1"
     },
@@ -126,6 +129,19 @@
     },
     "laminas/laminas-code": {
         "version": "4.4.2"
+    },
+    "liip/imagine-bundle": {
+        "version": "1.8",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.8",
+            "ref": "ffbb72e74598f04cc7f79f9fc736c77eeb98f569"
+        },
+        "files": [
+            "./config/packages/liip_imagine.yaml",
+            "./config/routes/liip_imagine.yaml"
+        ]
     },
     "monolog/monolog": {
         "version": "2.3.2"
@@ -615,6 +631,9 @@
     },
     "symfony/yaml": {
         "version": "v5.3.6"
+    },
+    "symfonycasts/verify-email-bundle": {
+        "version": "v1.5.0"
     },
     "theseer/tokenizer": {
         "version": "1.2.1"

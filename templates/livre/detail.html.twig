@@ -4,14 +4,15 @@
 
 {% block body %}
 <div class="row">
-    <div class="col-12 col-md-3">
+    <div class="col-12 col-md-3 my-3">
         <img src="{{ asset('images/livres/' ~ livre.imageName ) }}" alt="{{ livre.titre }}" class="img-fluid">
     </div>
-    <div class="col-12 col-md-9">
+    <div class="col-12 col-md-9 my-auto">
     <h1>{{ livre.titre }}</h1>
     <div>{{ livre.description|raw }}</div>
         <p>
-        {% if livre.auteur.pseudo is defined and livre.auteur.pseudo is not null %}
+           
+        {% if livre.auteur.pseudo is defined and livre.auteur.pseudo is not null and livre.auteur.pseudo != "" %}
         {{ livre.auteur.pseudo }}
         {% else %}
         {{ livre.auteur.nom }} {{ livre.auteur.prenom }} 

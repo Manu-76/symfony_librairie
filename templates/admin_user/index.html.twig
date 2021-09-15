@@ -5,7 +5,7 @@
 {% block body %}
 <div class="d-flex justify-content-between align-items-center">
     <h1>Liste des {{ title }}</h1>
-    <a href="{{ path('admin_user_new') }}" class="btn btn-success">Nouveau</a>
+    <a href="{{ path('admin_user_new', {'role':  role}) }}" class="btn btn-success">Nouveau</a>
 </div>
     <table class="table">
         <thead>
@@ -29,8 +29,8 @@
                 {% endif %}
             </td>
                 <td class="d-flex justify-content-end">
-                    <a href="{{ path('admin_user_show', {'id': user.id}) }}" class="btn btn-warning"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                    <a href="{{ path('admin_user_edit', {'id': user.id}) }}" class="btn btn-warning ms-3"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a href="{{ path('admin_user_show', {'id': user.id, 'role': role}) }}" class="btn btn-warning"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                    <a href="{{ path('admin_user_edit', {'id': user.id, 'role': role}) }}" class="btn btn-warning ms-3"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 </td>
             </tr>
         {% else %}
